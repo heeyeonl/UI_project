@@ -23,11 +23,6 @@ class SliderTests extends StatefulWidget {
 class _SliderTestsState extends State<SliderTests> {
   double mySliderValue = 2.0;
 
-  String _prettifyTheValues(double sliderVal) {
-    int roundedVal = sliderVal.round();
-    return ('Value: $roundedVal');
-  }
-
   @override
   Widget build(BuildContext context) {
     return
@@ -51,7 +46,7 @@ class _SliderTestsState extends State<SliderTests> {
           radius: 20,
         ),
         // and finally a text box.
-        Text(_prettifyTheValues(mySliderValue)),
+        Text('Slider value: ${mySliderValue.round()}'),
       ],
     );
   }

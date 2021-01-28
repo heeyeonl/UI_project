@@ -11,6 +11,7 @@ class CurvedSlider extends StatefulWidget {
   final ValueChanged<double> onChanged;
   double radius;
   double xPos;
+  Color color;
 
   // critical fail from class today (1/27/21)  placing parameters in the
   // { } brackets makes them optional.  Apparently even if you put @required
@@ -35,6 +36,7 @@ class _CurvedSliderState extends State<CurvedSlider> {
   // the finger is down.
   double fingerX = 0.0;
   double thumbPos = 0.0;
+  Color color = Colors.white;
 
   // and helper functions go here too.
   void _updateXpos(PointerEvent details) {
@@ -44,21 +46,24 @@ class _CurvedSliderState extends State<CurvedSlider> {
   // where interaction is defined for real.  This is where the callback finally
   // gets called.
   void _fingerDown(PointerEvent details) {
-    _updateXpos(details);
-    print("_fingerDown: $fingerX");
     // this is where I call the callback.  the "widget" object refers to
     // CurvedSlider as declared starting on line 7 above.
+    print('_fingerDown');
+    _updateXpos(details);
     widget.onChanged(fingerX);
+    color = Colors.yellow;
   }
 
   void _fingerMove(PointerEvent details) {
     _updateXpos(details);
-    print("_fingerMove: $fingerX");
     widget.onChanged(fingerX);
   }
 
-  void _processFingerInput() {
-    widget.xPos = fingerX;
+  void _fingerUp(PointerEvent details) {
+    print('_fingerUp');
+    setState(() {
+      widget.color = Colors.white;
+    });
   }
 
   // the heart of the curved slider.
@@ -72,10 +77,11 @@ class _CurvedSliderState extends State<CurvedSlider> {
           // probably want to handle other pointer events.
           onPointerDown: _fingerDown,
           onPointerMove: _fingerMove,
+          onPointerUp: _fingerUp,
           child: CustomPaint(
               // call painter constructor with parameters.
               // such as state for the paint algorithms.
-              painter: SliderPainter(fingerX, widget.radius)),
+              painter: SliderPainter(fingerX, widget.radius, color)),
         ));
   }
 }
@@ -85,7 +91,9 @@ class _CurvedSliderState extends State<CurvedSlider> {
 class SliderPainter extends CustomPainter {
   double xPos;
   double radius;
-  SliderPainter(this.xPos, this.radius);
+  Color color;
+
+  SliderPainter(this.xPos, this.radius, this.color);
 
   @override
   // this is really where the rending is defined.
@@ -94,10 +102,10 @@ class SliderPainter extends CustomPainter {
     double height = 50.0;
     double colorVal = xPos * 0.005;
     var line = Paint();
-    line.color = Colors.grey;
+    line.color = Colors.white;
     line.style = PaintingStyle.fill;
     var circle = Paint();
-    circle.color = Color.lerp(Colors.pink[300], Colors.yellow[300], colorVal);
+    circle.color = color;
     circle.style = PaintingStyle.fill;
 
     canvas.drawLine(Offset(0, height), Offset(size.width, height), line);
