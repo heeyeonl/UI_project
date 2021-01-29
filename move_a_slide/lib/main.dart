@@ -21,32 +21,33 @@ class SliderTests extends StatefulWidget {
 }
 
 class _SliderTestsState extends State<SliderTests> {
-  double mySliderValue = 2.0;
+  double mySliderValue = 0.0;
+  Color textColor = Colors.red;
+  bool active = false;
 
   @override
   Widget build(BuildContext context) {
-    return
-        // so my widget is a column.  (that's just a layout widget)
-        Column(
+    return Column(
       children: <Widget>[
-        // and my curved slider.
         CurvedSlider(
-          // this is the constructor call to my curved slider.
-          // I included an onChanged callback.
-          // this callback is called when the value of the slider
-          // changes.
           onChanged: (double newValue) {
-            // by calling setState, I force a redraw.
             setState(() {
-              // where state changes happen.
               mySliderValue = newValue;
             });
+            if (active) {
+              textColor = Colors.white;
+              active = false;
+            } else {
+              textColor = Colors.black;
+              active = true;
+            }
           },
-          // other parameters, these are optional though.
           radius: 20,
         ),
-        // and finally a text box.
-        Text('Slider value: ${mySliderValue.round()}'),
+        Text(
+          'Value: $mySliderValue',
+          style: TextStyle(color: textColor),
+        ), // and finally a text box.
       ],
     );
   }
