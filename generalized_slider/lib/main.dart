@@ -30,8 +30,9 @@ class _SliderTestsState extends State<SliderTests> {
       children: <Widget>[
         CurvedSlider(
           onChanged: (String newValue) {
+            // list
             setState(() {
-              valueText = newValue;
+              valueText = newValue; // build a string for loop, update valueText
             });
           },
           radius: 20,

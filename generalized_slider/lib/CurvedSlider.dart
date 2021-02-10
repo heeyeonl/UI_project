@@ -6,6 +6,7 @@ class CurvedSlider extends StatefulWidget {
   double radius;
   double xPos;
   int numCircles;
+  // initialize sliderValues
 
   CurvedSlider({
     @required this.value,
@@ -20,7 +21,8 @@ class CurvedSlider extends StatefulWidget {
 }
 
 class _CurvedSliderState extends State<CurvedSlider> {
-  List<double> sliderValues = new List<double>();
+  List<double> sliderValues =
+      new List<double>(); // could make a list of customized class
   List<bool> sliderActives = new List<bool>();
   double thumbPos;
   bool isFirst = false;
