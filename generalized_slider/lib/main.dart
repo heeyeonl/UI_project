@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:generalized_slider/GeneralizedSlider.dart';
+import 'package:generalized_slider/CurvedSlider.dart';
 
 void main() {
   return runApp(
@@ -28,7 +28,7 @@ class _SliderTestsState extends State<SliderTests> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        GeneralizedSlider(
+        CurvedSlider(
           onChanged: (double newValue) {
             setState(() {
               mySliderValue = newValue;
@@ -36,6 +36,7 @@ class _SliderTestsState extends State<SliderTests> {
           },
           radius: 20,
           textColor: Colors.black,
+          numCircles: 4,
         ),
         Text(
           'Value: $mySliderValue',
