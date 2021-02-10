@@ -35,13 +35,13 @@ class _SliderTestsState extends State<SliderTests> {
             });
           },
           radius: 20,
-          textColor: Colors.black,
           numCircles: 4,
         ),
         Text(
           'Value: $mySliderValue',
           style: TextStyle(color: textColor),
-        ), // and finally a text box.
+        ),
+        // and finally a text box.
       ],
     );
   }

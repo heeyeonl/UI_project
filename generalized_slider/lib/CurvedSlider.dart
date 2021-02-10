@@ -5,17 +5,13 @@ class CurvedSlider extends StatefulWidget {
   final ValueChanged<double> onChanged;
   double radius;
   double xPos;
-  Color circleColor;
-  Color textColor;
   int numCircles;
 
   CurvedSlider({
     @required this.value,
     @required this.onChanged,
-    @required this.circleColor,
     this.radius,
     this.xPos,
-    this.textColor,
     this.numCircles,
   });
 
@@ -26,37 +22,40 @@ class CurvedSlider extends StatefulWidget {
 class _CurvedSliderState extends State<CurvedSlider> {
   List<double> sliderValues = new List<double>();
   List<bool> sliderActives = new List<bool>();
-  double thumbPos = 0.0;
-  Color circleColor = Colors.white;
-  Color textColor = Colors.red;
+  double thumbPos;
+  bool isFirst = false;
+  int index;
 
-  void _updateXpos(PointerEvent details) {
-    sliderValues[0] = details.position.dx;
+  void _updateXpos(int i, PointerEvent details) {
+    sliderValues[i] = details.position.dx;
   }
 
   void _fingerDown(PointerEvent details) {
     print('_fingerDown');
-    _updateXpos(details);
-    circleColor = Colors.yellow;
-    textColor = Colors.yellow;
-    widget.textColor = textColor;
-    widget.onChanged(sliderValues.elementAt(0));
+    isFirst = true;
+    thumbPos = details.position.dx;
+    print('thumbPos: $thumbPos');
+    print('sliderValues: $sliderValues');
+    for (int i = 0; i < widget.numCircles; i++) {
+      if (sliderValues[i] < thumbPos + widget.radius &&
+          sliderValues[i] > thumbPos - widget.radius) {
+        sliderActives[i] = true;
+        index = i;
+      }
+    }
+    _updateXpos(index, details);
+    widget.onChanged(sliderValues[index]);
   }
 
   void _fingerMove(PointerEvent details) {
-    _updateXpos(details);
-    textColor = Colors.yellow;
-    widget.textColor = textColor;
-    widget.onChanged(sliderValues[0]);
+    _updateXpos(index, details);
+    widget.onChanged(sliderValues[index]);
   }
 
   void _fingerUp(PointerEvent details) {
     print('_fingerUp');
-    _updateXpos(details);
-    circleColor = Colors.white;
-    textColor = Colors.white;
-    widget.textColor = textColor;
-    widget.onChanged(sliderValues[0]);
+    _updateXpos(index, details);
+    widget.onChanged(sliderValues[index]);
   }
 
   @override
@@ -70,7 +69,7 @@ class _CurvedSliderState extends State<CurvedSlider> {
           onPointerUp: _fingerUp,
           child: CustomPaint(
               painter: SliderPainter(sliderValues, sliderActives, widget.radius,
-                  circleColor, widget.numCircles)),
+                  widget.numCircles, isFirst)),
         ));
   }
 }
@@ -79,11 +78,11 @@ class SliderPainter extends CustomPainter {
   List<double> sliderValues = new List<double>();
   List<bool> sliderActives = new List<bool>();
   double radius;
-  Color color;
   int numCircles;
+  bool isFirst;
 
-  SliderPainter(this.sliderValues, this.sliderActives, this.radius, this.color,
-      this.numCircles);
+  SliderPainter(this.sliderValues, this.sliderActives, this.radius,
+      this.numCircles, this.isFirst);
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -91,16 +90,18 @@ class SliderPainter extends CustomPainter {
     var line = Paint();
     line.color = Colors.white;
     line.style = PaintingStyle.fill;
-
     canvas.drawLine(Offset(0, height), Offset(size.width, height), line);
+
     for (int i = 0; i < numCircles; i++) {
+      if (!isFirst) {
+        print('isFirst? $isFirst');
+        sliderValues.add(i * 100.0);
+        sliderActives.add(false);
+      }
       var circle = Paint();
-      circle.color = color;
+      circle.color = Color.lerp(Colors.pink, Colors.yellow, i * 0.4);
       circle.style = PaintingStyle.fill;
-      sliderValues.add(i * 50.0);
-      sliderActives.add(false);
-      canvas.drawCircle(
-          Offset(sliderValues.elementAt(i), height), radius, circle);
+      canvas.drawCircle(Offset(sliderValues[i], height), radius, circle);
     }
   }
 
