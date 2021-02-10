@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class CurvedSlider extends StatefulWidget {
   final double value;
-  final ValueChanged<double> onChanged;
+  final ValueChanged<String> onChanged;
   double radius;
   double xPos;
   int numCircles;
@@ -44,18 +44,26 @@ class _CurvedSliderState extends State<CurvedSlider> {
       }
     }
     _updateXpos(index, details);
-    widget.onChanged(sliderValues[index]);
+    widget.onChanged(_printAllValues());
   }
 
   void _fingerMove(PointerEvent details) {
     _updateXpos(index, details);
-    widget.onChanged(sliderValues[index]);
+    widget.onChanged(_printAllValues());
   }
 
   void _fingerUp(PointerEvent details) {
     print('_fingerUp');
     _updateXpos(index, details);
-    widget.onChanged(sliderValues[index]);
+    widget.onChanged(_printAllValues());
+  }
+
+  String _printAllValues() {
+    List<String> text = new List<String>();
+    for (int i = 0; i < widget.numCircles; i++) {
+      text.add(sliderValues[i].toString());
+    }
+    return text.toString();
   }
 
   @override

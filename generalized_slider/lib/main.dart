@@ -21,7 +21,7 @@ class SliderTests extends StatefulWidget {
 }
 
 class _SliderTestsState extends State<SliderTests> {
-  double mySliderValue = 0.0;
+  String valueText;
   Color textColor = Colors.black;
 
   @override
@@ -29,16 +29,16 @@ class _SliderTestsState extends State<SliderTests> {
     return Column(
       children: <Widget>[
         CurvedSlider(
-          onChanged: (double newValue) {
+          onChanged: (String newValue) {
             setState(() {
-              mySliderValue = newValue;
+              valueText = newValue;
             });
           },
           radius: 20,
-          numCircles: 4,
+          numCircles: 5,
         ),
         Text(
-          'Value: $mySliderValue',
+          '$valueText',
           style: TextStyle(color: textColor),
         ),
         // and finally a text box.
