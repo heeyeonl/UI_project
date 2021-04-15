@@ -10,6 +10,8 @@ dependencies:
   flappy_search_bar: 1.4.1
   provider: ^4.1.1
   cupertino_icons: ^0.1.2
+  hardware_buttons: ^1.0.0
+
 dev_dependencies:
   flutter_test:
     sdk: flutter
