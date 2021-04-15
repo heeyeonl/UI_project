@@ -1,0 +1,29 @@
+name: mi_card
+description: A new Flutter application.
+version: 1.0.0+1
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+dependencies:
+  flutter:
+    sdk: flutter
+  basic_utils: ^2.3.3
+  flappy_search_bar: 1.4.1
+  provider: ^4.1.1
+  cupertino_icons: ^0.1.2
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+flutter:
+  uses-material-design: true
+
+  assets:
+    - images/
+
+  fonts:
+    - family: Pacifico
+      fonts:
+        - asset: fonts/Pacifico-Regular.ttf
+
+    - family: SourceSansPro
+      fonts:
+        - asset: fonts/SourceSansPro-Regular.ttf
