@@ -73,7 +73,7 @@ class _HomePageState extends State<HomePage> {
                       color: Colors.teal,
                     ),
                     hintText: "Please enter timer value in minutes",
-                    labelStyle: TextStyle(
+                    hintStyle: TextStyle(
                       letterSpacing: 2.5,
                       fontSize: 20.0,
                       fontWeight: FontWeight.bold,
