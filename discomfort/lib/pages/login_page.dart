@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'forgot_password_page.dart';
+import 'home_page.dart';
 
 class LoginPage extends StatefulWidget {
   @override
@@ -30,12 +32,14 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: <Widget>[
+                SizedBox(
+                  height: 100,
+                ),
                 Text(
                   'Lock the Phone',
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 40.0,
-                    fontWeight: FontWeight.bold,
                     fontFamily: 'Pacifico',
                   ),
                 ),
@@ -86,7 +90,7 @@ class _LoginPageState extends State<LoginPage> {
                       borderRadius: BorderRadius.circular(20)),
                   child: TextButton(
                     onPressed: () {
-                      // _pushRoute()
+                      _pushRoute(HomePage());
                     },
                     child: Text(
                       'Login',
@@ -98,6 +102,30 @@ class _LoginPageState extends State<LoginPage> {
                         letterSpacing: 1.0,
                       ),
                     ),
+                  ),
+                ),
+                TextButton(
+                  onPressed: () {
+                    _pushRoute(ForgotPasswordPage());
+                  },
+                  child: Text(
+                    'Forgot Password?',
+                    style: TextStyle(
+                      color: Colors.teal[50],
+                      fontSize: 15,
+                    ),
+                  ),
+                ),
+                /* SPACE FILLER */
+                SizedBox(
+                  height: 100,
+                ),
+                TextButton(
+                  onPressed: () {},
+                  child: Text(
+                    'New User? Create an Account',
+                    style: TextStyle(color: Color(0xFFE5A024), fontSize: 15),
+                    // style: TextStyle(color: Colors.blue, fontSize: 15),
                   ),
                 ),
               ],
